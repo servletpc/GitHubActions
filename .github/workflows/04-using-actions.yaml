@@ -15,6 +15,7 @@ jobs:
                 node-version: '20.x'
             - name: Install dependecies
               run: npm ci
+              working-directory: 04-using-actions/react-app
         #checkout code
         # install dep of react
         # execute automated testpwd
