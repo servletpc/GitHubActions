@@ -1,0 +1,16 @@
+name: 04-using-actions
+
+on:
+ push:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout code
+              uses: action/checkout@v4
+            - name: printing folders
+              run: ls
+        #checkout code
+        # install dep of react
+        # execute automated testpwd
