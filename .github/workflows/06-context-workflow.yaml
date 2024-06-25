@@ -1,7 +1,14 @@
 name: 06-context
+run-name: 06-context | DEBUG - ${{inputs.debug}}
 on: 
  push:
  workflow_dispatch:
+  inputs:
+    debug:
+      type: boolean
+      default: false
+env:
+  MY_WORKFLOW_VAR: "WORKFLOW"
 jobs:
    echo-data:
     runs-on: ubuntu-latest
@@ -16,4 +23,12 @@ jobs:
      - name: reterive vairable
        run: |
          echo "vairable: ${{vars.MY_VAR}}"
+     - name: reterive ENV VAIRABLE
+       run: |
+         echo "vairable: ${{env.MY_WORKFLOW_VAR}}"
+       env: 
+        MY_WORKFLOW_VAR: "test"
+     - name: reterive ENV VAIRABLE updated
+       run: |
+         echo "vairable: ${{env.MY_WORKFLOW_VAR}}"
 
