@@ -1,4 +1,5 @@
 name: 07- Using expression
+run-name: 07- using exression | DEBUG - {{inputs.debug && 'ON' || 'OF'}}
 
 on:
     push:
