@@ -19,6 +19,6 @@ jobs:
                  echo "Branch  :${{github.ref}}"
                   echo "SHa  :${{github.sha}}"
             - name: '[debug] pritn when triggred from main branch'
-              if: ${{inputs.debug && github.ref=='refs/heads/main'}}
+              if: inputs.debug && github.ref=='refs/heads/main'
               run: echo 'I was triggred from main'
 
