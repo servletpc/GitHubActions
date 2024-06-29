@@ -24,3 +24,4 @@ jobs:
                echo "step env var: ${{env.STEP_VAR2}}
                echo "step env var: ${{env.WORKFLOW_VAR}}
                echo "step env var: ${{env.JOB_VAR}}
+                echo "step env var: ${{env.OVERWRITTEN}}
