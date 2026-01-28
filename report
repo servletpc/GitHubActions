@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components"
+    xsi:schemaLocation="
+        http://jasperreports.sourceforge.net/jasperreports
+        http://jasperreports.sourceforge.net/xsd/jasperreport.xsd
+        http://jasperreports.sourceforge.net/jasperreports/components
+        http://jasperreports.sourceforge.net/xsd/components.xsd"
+    name="fx_order_notification"
+    pageWidth="595"
+    pageHeight="842"
+    columnWidth="555"
+    leftMargin="20"
+    rightMargin="20"
+    topMargin="20"
+    bottomMargin="20"
+    uuid="c1111111-1111-1111-1111-111111111111">
+
+    <!-- ========================= -->
+    <!-- MAIN DATASET (JSON ROOT) -->
+    <!-- ========================= -->
+
+    <field name="orderId" class="java.lang.String"/>
+    <field name="orderType" class="java.lang.String"/>
+    <field name="orderStatus" class="java.lang.String"/>
+    <field name="relatedOrders" class="java.lang.String"/>
+    <field name="direction" class="java.lang.String"/>
+    <field name="goodUntil" class="java.lang.String"/>
+    <field name="ccyPair" class="java.lang.String"/>
+    <field name="buyCcy" class="java.lang.String"/>
+    <field name="sellCcy" class="java.lang.String"/>
+    <field name="buyAmount" class="java.lang.Double"/>
+    <field name="sellAmount" class="java.lang.Double"/>
+    <field name="dealtCcy" class="java.lang.String"/>
+    <field name="valueDate" class="java.lang.String"/>
+    <field name="targetRate" class="java.lang.Double"/>
+    <field name="triggerType" class="java.lang.String"/>
+    <field name="totalAmount" class="java.lang.Double"/>
+    <field name="outstandingAmount" class="java.lang.Double"/>
+    <field name="createDatetime" class="java.lang.String"/>
+    <field name="lastActionDate" class="java.lang.String"/>
+    <field name="organization" class="java.lang.String"/>
+
+    <!-- LIST FIELD -->
+    <field name="relatedDeals" class="java.util.List"/>
+
+    <!-- ========================= -->
+    <!-- SUB DATASET (TABLE ROWS) -->
+    <!-- ========================= -->
+
+    <subDataset name="RelatedDealsDataset">
+        <field name="dealId" class="java.lang.String"/>
+        <field name="contractReference" class="java.lang.String"/>
+        <field name="clientBuyAmount" class="java.lang.Double"/>
+        <field name="clientSellAmount" class="java.lang.Double"/>
+        <field name="targetRate" class="java.lang.Double"/>
+        <field name="valueDate" class="java.lang.String"/>
+    </subDataset>
+
+    <!-- ========================= -->
+    <!-- PAGE HEADER -->
+    <!-- ========================= -->
+
+    <pageHeader>
+        <band height="90">
+            <staticText>
+                <reportElement x="0" y="0" width="555" height="25"/>
+                <text><![CDATA[Foreign exchange order notification]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="0" y="35" width="120" height="18"/>
+                <text><![CDATA[Order Id:]]></text>
+            </staticText>
+
+            <textField>
+                <reportElement x="140" y="35" width="200" height="18"/>
+                <textFieldExpression><![CDATA[$F{orderId}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="55" width="120" height="18"/>
+                <text><![CDATA[Transaction Time:]]></text>
+            </staticText>
+
+            <textField>
+                <reportElement x="140" y="55" width="200" height="18"/>
+                <textFieldExpression><![CDATA[$F{createDatetime}]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageHeader>
+
+    <!-- ========================= -->
+    <!-- ORDER DETAILS -->
+    <!-- ========================= -->
+
+    <detail>
+        <band height="150">
+            <staticText>
+                <reportElement x="0" y="0" width="555" height="22"/>
+                <text><![CDATA[Foreign exchange order details]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="0" y="30" width="140" height="18"/>
+                <text><![CDATA[Order Type:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="160" y="30" width="200" height="18"/>
+                <textFieldExpression><![CDATA[$F{orderType}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="50" width="140" height="18"/>
+                <text><![CDATA[Currency Pair:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="160" y="50" width="200" height="18"/>
+                <textFieldExpression><![CDATA[$F{ccyPair}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="70" width="140" height="18"/>
+                <text><![CDATA[Total Amount:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="160" y="70" width="200" height="18"/>
+                <textFieldExpression><![CDATA[$F{dealtCcy} + " " + $F{totalAmount}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="90" width="140" height="18"/>
+                <text><![CDATA[Outstanding:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="160" y="90" width="200" height="18"/>
+                <textFieldExpression><![CDATA[$F{outstandingAmount}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="110" width="140" height="18"/>
+                <text><![CDATA[Target Rate:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="160" y="110" width="200" height="18"/>
+                <textFieldExpression><![CDATA[$F{targetRate}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+    <!-- ========================= -->
+    <!-- RELATED DEALS TABLE -->
+    <!-- ========================= -->
+
+    <summary>
+        <band height="180">
+            <staticText>
+                <reportElement x="0" y="0" width="555" height="22"/>
+                <text><![CDATA[Related Foreign Exchange Contracts]]></text>
+            </staticText>
+
+            <componentElement>
+                <reportElement x="0" y="30" width="555" height="120"/>
+
+                <jr:table>
+                    <datasetRun subDataset="RelatedDealsDataset">
+                        <dataSourceExpression><![CDATA[
+                            new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{relatedDeals})
+                        ]]></dataSourceExpression>
+                    </datasetRun>
+
+                    <!-- DEAL ID -->
+                    <jr:column width="80">
+                        <jr:columnHeader>
+                            <band height="20">
+                                <staticText>
+                                    <reportElement x="0" y="0" width="80" height="20"/>
+                                    <text><![CDATA[Deal Id]]></text>
+                                </staticText>
+                            </band>
+                        </jr:columnHeader>
+                        <jr:detailCell>
+                            <band height="20">
+                                <textField>
+                                    <reportElement x="0" y="0" width="80" height="20"/>
+                                    <textFieldExpression><![CDATA[$F{dealId}]]></textFieldExpression>
+                                </textField>
+                            </band>
+                        </jr:detailCell>
+                    </jr:column>
+
+                    <!-- CONTRACT -->
+                    <jr:column width="90">
+                        <jr:columnHeader>
+                            <band height="20">
+                                <staticText>
+                                    <reportElement x="0" y="0" width="90" height="20"/>
+                                    <text><![CDATA[Contract]]></text>
+                                </staticText>
+                            </band>
+                        </jr:columnHeader>
+                        <jr:detailCell>
+                            <band height="20">
+                                <textField>
+                                    <reportElement x="0" y="0" width="90" height="20"/>
+                                    <textFieldExpression><![CDATA[$F{contractReference}]]></textFieldExpression>
+                                </textField>
+                            </band>
+                        </jr:detailCell>
+                    </jr:column>
+
+                    <!-- BUY -->
+                    <jr:column width="110">
+                        <jr:columnHeader>
+                            <band height="20">
+                                <staticText>
+                                    <reportElement x="0" y="0" width="110" height="20"/>
+                                    <text><![CDATA[You Buy]]></text>
+                                </staticText>
+                            </band>
+                        </jr:columnHeader>
+                        <jr:detailCell>
+                            <band height="20">
+                                <textField>
+                                    <reportElement x="0" y="0" width="110" height="20"/>
+                                    <textFieldExpression><![CDATA[$F{clientBuyAmount}]]></textFieldExpression>
+                                </textField>
+                            </band>
+                        </jr:detailCell>
+                    </jr:column>
+
+                    <!-- SELL -->
+                    <jr:column width="110">
+                        <jr:columnHeader>
+                            <band height="20">
+                                <staticText>
+                                    <reportElement x="0" y="0" width="110" height="20"/>
+                                    <text><![CDATA[You Sell]]></text>
+                                </staticText>
+                            </band>
+                        </jr:columnHeader>
+                        <jr:detailCell>
+                            <band height="20">
+                                <textField>
+                                    <reportElement x="0" y="0" width="110" height="20"/>
+                                    <textFieldExpression><![CDATA[$F{clientSellAmount}]]></textFieldExpression>
+                                </textField>
+                            </band>
+                        </jr:detailCell>
+                    </jr:column>
+
+                    <!-- RATE -->
+                    <jr:column width="70">
+                        <jr:columnHeader>
+                            <band height="20">
+                                <staticText>
+                                    <reportElement x="0" y="0" width="70" height="20"/>
+                                    <text><![CDATA[Rate]]></text>
+                                </staticText>
+                            </band>
+                        </jr:columnHeader>
+                        <jr:detailCell>
+                            <band height="20">
+                                <textField>
+                                    <reportElement x="0" y="0" width="70" height="20"/>
+                                    <textFieldExpression><![CDATA[$F{targetRate}]]></textFieldExpression>
+                                </textField>
+                            </band>
+                        </jr:detailCell>
+                    </jr:column>
+
+                    <!-- VALUE DATE -->
+                    <jr:column width="95">
+                        <jr:columnHeader>
+                            <band height="20">
+                                <staticText>
+                                    <reportElement x="0" y="0" width="95" height="20"/>
+                                    <text><![CDATA[Value Date]]></text>
+                                </staticText>
+                            </band>
+                        </jr:columnHeader>
+                        <jr:detailCell>
+                            <band height="20">
+                                <textField>
+                                    <reportElement x="0" y="0" width="95" height="20"/>
+                                    <textFieldExpression><![CDATA[$F{valueDate}]]></textFieldExpression>
+                                </textField>
+                            </band>
+                        </jr:detailCell>
+                    </jr:column>
+
+                </jr:table>
+            </componentElement>
+        </band>
+    </summary>
+
+</jasperReport>
